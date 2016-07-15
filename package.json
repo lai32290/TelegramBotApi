@@ -1,0 +1,19 @@
+{
+  "name": "telegrambotapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://lai32290@github.com/lai32290/TelegramBotApi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lai32290/TelegramBotApi/issues"
+  },
+  "homepage": "https://github.com/lai32290/TelegramBotApi#readme"
+}
