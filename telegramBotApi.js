@@ -24,7 +24,7 @@ function TelegraBotApi() {
                 res.on('end', () => {
                     resolve(JSON.parse(data));
                 });
-            }).end();
+            });
         });
     };
 }
