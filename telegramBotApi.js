@@ -1,4 +1,4 @@
-const http = require('http')
+const https = require('https')
     ;
 
 const config = {
@@ -11,13 +11,19 @@ function TelegraBotApi() {
     self.token = undefined;
 
     self.getUpdates = () => {
+        var url = config.baseUrl + self.token + '/getUpdates';
         return new Promise((resolve, reject) => {
-            http.request({
-                method: 'GET'
-                , host: config.host
-                , path: '/bot' + self.token + '/getUpdates'
-            }, (res) => {
-                resolve(res);
+
+            https.get(url, (res) => {
+                var data = '';
+
+                res.on('data', d => {
+                    data += d;
+                });
+
+                res.on('end', () => {
+                    resolve(JSON.parse(data));
+                });
             }).end();
         });
     };
