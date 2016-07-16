@@ -9,6 +9,7 @@ telegram.token = token;
 
 telegram.getUpdates()
     .then(res => {
-        console.log('ffjids');
-        console.log(res);
+        res.result.forEach(item => {
+            console.log(item);
+        });
     });
