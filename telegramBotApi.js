@@ -14,6 +14,7 @@ const config = {
         , sendMessage: 'sendMessage'
         , forwardMessage: 'forwardMessage'
         , sendPhoto: 'sendPhoto'
+        , sendVenue: 'sendVenue'
         , sendContact: 'sendContact'
         , getUpdates: 'getUpdates'
     }
@@ -155,6 +156,48 @@ function sendPhoto() {
         });
     });
 }
+function sendVenue() {
+    var self = this;
+
+    const params = [
+        'chat_id'
+        , 'latitude'
+        , 'longitude'
+        , 'title'
+        , 'address'
+    ];
+    var parametters = {};
+
+    switch (arguments.length) {
+        case 1:
+            parametters = arguments[0];
+            break;
+
+        case params.length:
+            parametters = argumentsToParametters(params, arguments);
+            break;
+
+        default:
+            parametters = extend(argumentsToParametters(params, arguments),
+                arguments[parametters.length + 1]);
+            break;
+    }
+
+    parametters = qs.stringify(parametters);
+
+    return new Promise((resolve, reject) => {
+        const options = {
+            url: _makeUrl(self.token, config.methods.sendVenue) + '?' + parametters
+            , json: true
+        };
+
+        request.get(options, (err, res, body) => {
+            if(err) reject(err);
+
+            resolve(body);
+        });
+    });
+}
 function sendContact() {
     var self = this;
 
@@ -207,7 +250,6 @@ function getUpdates() {
 function _makeUrl(token, method) {
     return config.baseUrl + token + '/' + method;
 }
-
 function onlyReturn(token, method, resolve, reject) {
     const options = {
         url : _makeUrl(token, method)
@@ -220,6 +262,19 @@ function onlyReturn(token, method, resolve, reject) {
         resolve(body);
     });
 }
+function argumentsToParametters(parametters, args) {
+    var params = {};
+    console.log(args);
+
+    for(var index in args) {
+        var value = args[index];
+        var key = parametters[index];
+
+        params[key] = value;
+    }
+
+    return params;
+}
 
 function TelegraBotApi(token) {
     var self = this;
@@ -231,6 +286,7 @@ TelegraBotApi.prototype.getMe = getMe;
 TelegraBotApi.prototype.sendMessage = sendMessage;
 TelegraBotApi.prototype.forwardMessage = forwardMessage;
 TelegraBotApi.prototype.sendPhoto = sendPhoto;
+TelegraBotApi.prototype.sendVenue = sendVenue;
 TelegraBotApi.prototype.sendContact = sendContact;
 TelegraBotApi.prototype.getUpdates = getUpdates;
 
