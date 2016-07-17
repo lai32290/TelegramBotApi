@@ -148,29 +148,12 @@ function sendContact() {
     var self = this;
 
     const method = config.methods.sendContact;
-    var parametters = {};
-    switch (arguments.length) {
-        case 1:
-            parametters = arguments[0];
-            break;
-
-        case 2:
-            parametters = {
-                'chat_id': arguments[0]
-                , 'phone_number': arguments[1]
-                , 'first_name': arguments[2]
-            };
-            break;
-
-        default:
-            parametters = extend({
-                'chat_id': arguments[0]
-                , 'phone_number': arguments[1]
-                , 'first_name': arguments[2]
-            }, arguments[3]);
-            break;
-    }
-
+    const params = [
+        'chat_id'
+        , 'phone_number'
+        , 'first_name'
+    ];
+    var parametters = prepareParametters(params, arguments);
     parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
