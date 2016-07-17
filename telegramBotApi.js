@@ -61,26 +61,17 @@ function sendMessage() {
 function forwardMessage() {
     var self = this;
 
+    const method = config.methods.forwardMessage;
     const params = [
         'chat_id'
         , 'from_chat_id'
         , 'message_id'
     ];
     var parametters = prepareParametters(params, arguments);
-
     parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url: _makeUrl(self.token, config.methods.forwardMessage) + '?' + parametters
-            , json: true
-        };
-
-        request.get(options, (err, res, body) => {
-            if (err) reject(err);
-
-            resolve(body);
-        });
+        getRequire(self.token, method, parametters, resolve, reject);
     });
 }
 function sendPhoto() {
