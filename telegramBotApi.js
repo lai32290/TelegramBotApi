@@ -40,7 +40,6 @@ function sendMessage() {
         , 'text'
     ];
     var parametters = prepareParametters(params, arguments);
-    console.log(['aquii', parametters]);
 
     parametters = qs.stringify(parametters);
 
