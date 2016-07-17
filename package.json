@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/lai32290/TelegramBotApi/issues"
   },
-  "homepage": "https://github.com/lai32290/TelegramBotApi#readme"
+  "homepage": "https://github.com/lai32290/TelegramBotApi#readme",
+  "dependencies": {
+    "json-extend": "^0.1.0",
+    "require": "^2.4.20"
+  }
 }

@@ -1,4 +1,8 @@
-const https = require('https')
+"use strict";
+
+const request = require('request')
+    , qs = require('querystring')
+    , extend = require('json-extend')
     ;
 
 const config = {
@@ -10,58 +14,68 @@ const config = {
     }
 };
 
-function TelegraBotApi() {
+function TelegraBotApi(token) {
     var self = this;
-    self.token = undefined;
+    self.token = token !== undefined ? token : undefined;
 
-    self.getUpdates = () => {
-        const url = makeUrl(config.methods.getUpdates);
+    self.getUpdates = getUpdates;
+    self.sendMessage = sendMessage;
+
+    function getUpdates() {
         return new Promise((resolve, reject) => {
+            const options = {
+                url : _makeUrl(config.methods.getUpdates)
+                , json : true
+            };
 
-            https.get(url, (res) => {
-                var data = '';
+            request.get(options, (err, res, body) => {
+                if(err) reject(err);
 
-                res.on('data', d => {
-                    data += d;
-                });
-
-                res.on('end', () => {
-                    resolve(JSON.parse(data));
-                });
+                resolve(body);
             });
         });
-    };
+    }
 
-    self.sendMessage = (chatId, message, parseMode, disableWebPageView, disableNotification,
-                        replyToMessageId, replyMarkup) => {
-        const url = makeUrl(config.methods.sendMessage);
-        var parametters = [];
-        parametters.push('chat_id=' + chatId);
-        parametters.push('text=' + message);
-        if(parseMode !== undefined) parametters.push('parse_mode=' + parseMode);
-        if(disableWebPageView !== undefined) parametters.push('disable_web_page_preview=' + disableWebPageView);
-        if(disableNotification !== undefined) parametters.push('disable_notification=' + disableNotification);
-        if(replyToMessageId !== undefined) parametters.push('reply_to_message_id=' + replyToMessageId);
-        if(replyMarkup !== undefined) parametters.push('reply_markup=' + replyMarkup);
+    function sendMessage() {
+        var parametters = {};
 
-        parametters = parametters.join('&');
+        switch (arguments.length) {
+            case 1:
+                parametters.arguments;
+                break;
+
+            case 2:
+                parametters = {
+                    'chat_id' : arguments[0]
+                    , 'text' : arguments[1]
+                };
+                break;
+
+            default:
+                parametters = extend({
+                    'chat_id': arguments[0]
+                    , 'text': arguments[1]
+                }, arguments[3]);
+                break;
+        }
+
+        parametters = qs.stringify(parametters);
 
         return new Promise((resolve, reject) => {
-            https.get(url + '?' + parametters, (res) => {
-                var data = '';
+            const options = {
+                url: _makeUrl(config.methods.sendMessage) + '?' + parametters
+                , json: true
+            };
 
-                res.on('data', d => {
-                    data += d;
-                });
+            request.get(options, (err, res, body) => {
+                if(err) reject(err);
 
-                res.on('end', () => {
-                    resolve(JSON.parse(data));
-                });
+                resolve(body);
             });
         });
-    };
+    }
 
-    function makeUrl(method) {
+    function _makeUrl(method) {
         return config.baseUrl + self.token + '/' + method;
     }
 }
