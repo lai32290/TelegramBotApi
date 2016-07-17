@@ -77,6 +77,7 @@ function forwardMessage() {
 function sendPhoto() {
     var self = this;
 
+    const method = config.methods.sendPhoto;
     const params = [
         'chat_id'
         , 'photo'
@@ -87,17 +88,7 @@ function sendPhoto() {
         parametters['photo'] = fs.createReadStream(parametters['photo']);
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url: _makeUrl(self.token, config.methods.sendPhoto)
-            , formData: parametters
-            , json: true
-        };
-
-        request.post(options, (err, res, body) => {
-            if (err) reject(err);
-
-            resolve(body);
-        });
+        postRequire(self.token, method, parametters, resolve, reject);
     });
 }
 function sendVenue() {
@@ -186,6 +177,19 @@ function getRequire(token, method, parametters, resolve, reject) {
     };
 
     request.get(options, (err, res, body) => {
+        if (err) reject(err);
+
+        resolve(body);
+    });
+}
+function postRequire(token, method, parametters, resolve, reject) {
+    const options = {
+        url: _makeUrl(token, method)
+        , formData: parametters
+        , json: true
+    };
+
+    request.post(options, (err, res, body) => {
         if (err) reject(err);
 
         resolve(body);
