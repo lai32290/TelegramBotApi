@@ -21,9 +21,34 @@
                 "message_id"
             ]
         },
-        "sendPhoto": "sendPhoto",
-        "sendVenue": "sendVenue",
-        "sendContact": "sendContact",
-        "getUpdates": "getUpdates"
+        "sendPhoto": {
+            "urlString": "sendPhoto",
+            "requireParams": [
+                "chat_id",
+                "photo"
+            ]
+        },
+        "sendVenue": {
+            "urlString": "sendVenue",
+            "requireParams": [
+                "chat_id",
+                "latitude",
+                "longitude",
+                "title",
+                "address"
+            ]
+        },
+        "sendContact": {
+            "urlString": "sendContact",
+            "requireParams": [
+                "chat_id",
+                "phone_number",
+                "first_name"
+            ]
+        },
+        "getUpdates": {
+            "urlString": "getUpdates",
+            "requireParams": []
+        }
     }
 }
