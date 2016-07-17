@@ -27,9 +27,19 @@ const parseMode = {
 
 function getMe() {
     var self = this;
+    const method = config.methods.getMe;
 
     return new Promise((resolve, reject) => {
-        onlyReturn(self.token, config.methods.getMe, resolve, reject);
+        const options = {
+            url: _makeUrl(self.token, method)
+            , json: true
+        };
+
+        request.get(options, (err, res, body) => {
+            if (err) reject(err);
+
+            resolve(body);
+        });
     });
 }
 function sendMessage() {
@@ -137,6 +147,7 @@ function sendVenue() {
 function sendContact() {
     var self = this;
 
+    const method = config.methods.sendContact;
     var parametters = {};
     switch (arguments.length) {
         case 1:
@@ -163,8 +174,16 @@ function sendContact() {
     parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
+        getRequire(self.token, method, parametters, resolve, reject);
+    });
+}
+function getUpdates() {
+    var self = this;
+    const method = config.methods.getUpdates;
+
+    return new Promise((resolve, reject) => {
         const options = {
-            url: _makeUrl(self.token, config.methods.sendContact) + '?' + parametters
+            url: _makeUrl(self.token, method)
             , json: true
         };
 
@@ -175,28 +194,9 @@ function sendContact() {
         });
     });
 }
-function getUpdates() {
-    var self = this;
-
-    return new Promise((resolve, reject) => {
-        onlyReturn(self.token, config.methods.getUpdates, resolve, reject);
-    });
-}
 
 function _makeUrl(token, method) {
     return config.baseUrl + token + '/' + method;
-}
-function onlyReturn(token, method, resolve, reject) {
-    const options = {
-        url: _makeUrl(token, method)
-        , json: true
-    };
-
-    request.get(options, (err, res, body) => {
-        if (err) reject(err);
-
-        resolve(body);
-    });
 }
 function argumentsToParametters(parametters, args) {
     var params = {};
@@ -229,6 +229,18 @@ function prepareParametters(params, args) {
     }
 
     return parametters;
+}
+function getRequire(token, method, parametters, resolve, reject) {
+    const options = {
+        url: _makeUrl(token, method) + '?' + parametters
+        , json: true
+    };
+
+    request.get(options, (err, res, body) => {
+        if (err) reject(err);
+
+        resolve(body);
+    });
 }
 
 function TelegraBotApi(token) {
