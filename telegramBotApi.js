@@ -1,6 +1,7 @@
 "use strict";
 
 const request = require('request')
+    , fs = require('fs')
     , qs = require('querystring')
     , extend = require('json-extend')
     ;
@@ -9,10 +10,11 @@ const config = {
     host: 'api.bot.org'
     , baseUrl : 'https://api.telegram.org/bot'
     , methods: {
-        getUpdates: 'getUpdates'
+        getMe: 'getMe'
         , sendMessage: 'sendMessage'
-        , getMe: 'getMe'
         , forwardMessage: 'forwardMessage'
+        , sendPhoto: 'sendPhoto'
+        , getUpdates: 'getUpdates'
     }
 };
 
@@ -110,6 +112,48 @@ function forwardMessage() {
         });
     });
 }
+function sendPhoto() {
+    var self = this;
+
+    var parametters = {};
+
+    switch (arguments.length) {
+        case 1:
+            parametters = arguments[0];
+            break;
+
+        case 2:
+            parametters = {
+                'chat_id' : arguments[0]
+                , 'photo' : arguments[1]
+            };
+            break;
+
+        default:
+            parametters = extend({
+                'chat_id' : arguments[0]
+                , 'photo' : arguments[1]
+            }, arguments[2]);
+            break;
+    }
+
+    if(fs.existsSync(parametters['photo']))
+        parametters['photo'] = fs.createReadStream(parametters['photo']);
+
+    return new Promise((resolve, reject) => {
+        const options = {
+            url: _makeUrl(self.token, config.methods.sendPhoto)
+            , formData: parametters
+            , json: true
+        };
+
+        request.post(options, (err, res, body) => {
+            if(err) reject(err);
+
+            resolve(body);
+        });
+    });
+}
 function getUpdates() {
     var self = this;
 
@@ -144,6 +188,7 @@ function TelegraBotApi(token) {
 TelegraBotApi.prototype.getMe = getMe;
 TelegraBotApi.prototype.sendMessage = sendMessage;
 TelegraBotApi.prototype.forwardMessage = forwardMessage;
+TelegraBotApi.prototype.sendPhoto = sendPhoto;
 TelegraBotApi.prototype.getUpdates = getUpdates;
 
 module.exports = {
