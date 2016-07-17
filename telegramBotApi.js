@@ -120,6 +120,7 @@ function sendPhoto() {
 function sendVenue() {
     var self = this;
 
+    const method = config.methods.sendVenue;
     const params = [
         'chat_id'
         , 'latitude'
@@ -132,16 +133,7 @@ function sendVenue() {
     parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url: _makeUrl(self.token, config.methods.sendVenue) + '?' + parametters
-            , json: true
-        };
-
-        request.get(options, (err, res, body) => {
-            if (err) reject(err);
-
-            resolve(body);
-        });
+        getRequire(self.token, method, parametters, resolve, reject);
     });
 }
 function sendContact() {
