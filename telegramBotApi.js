@@ -59,29 +59,12 @@ function sendMessage() {
 function forwardMessage() {
     var self = this;
 
-    var parametters = {};
-
-    switch (arguments.length) {
-        case 1:
-            parametters = arguments[0];
-            break;
-
-        case 3:
-            parametters = {
-                'chat_id' : arguments[0]
-                , 'from_chat_id' : arguments[1]
-                , 'message_id' : arguments[2]
-            };
-            break;
-
-        default:
-            parametters = extend({
-                'chat_id' : arguments[0]
-                , 'from_chat_id' : arguments[1]
-                , 'message_id' : arguments[2]
-            }, arguments[3]);
-            break;
-    }
+    const params = [
+        'chat_id'
+        , 'from_chat_id'
+        , 'message_id'
+    ];
+    var parametters = prepareParametters(params, arguments);
 
     parametters = qs.stringify(parametters);
 
