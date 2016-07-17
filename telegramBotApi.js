@@ -45,6 +45,7 @@ function getMe() {
 function sendMessage() {
     var self = this;
 
+    const method = config.methods.sendMessage;
     const params = [
         'chat_id'
         , 'text'
@@ -54,16 +55,7 @@ function sendMessage() {
     parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url: _makeUrl(self.token, config.methods.sendMessage) + '?' + parametters
-            , json: true
-        };
-
-        request.get(options, (err, res, body) => {
-            if (err) reject(err);
-
-            resolve(body);
-        });
+        getRequire(self.token, method, parametters, resolve, reject);
     });
 }
 function forwardMessage() {
