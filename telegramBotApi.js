@@ -39,27 +39,8 @@ function sendMessage() {
         'chat_id'
         , 'text'
     ];
-    var parametters = {};
-
-    switch (arguments.length) {
-        case 1:
-            parametters = arguments[0];
-            break;
-
-        case 2:
-            parametters = {
-                'chat_id' : arguments[0]
-                , 'text' : arguments[1]
-            };
-            break;
-
-        default:
-            parametters = extend({
-                'chat_id': arguments[0]
-                , 'text': arguments[1]
-            }, arguments[2]);
-            break;
-    }
+    var parametters = prepareParametters(params, arguments);
+    console.log(['aquii', parametters]);
 
     parametters = qs.stringify(parametters);
 
@@ -253,9 +234,8 @@ function onlyReturn(token, method, resolve, reject) {
 }
 function argumentsToParametters(parametters, args) {
     var params = {};
-    console.log(args);
 
-    for(var index in args) {
+    for(var index in parametters) {
         var value = args[index];
         var key = parametters[index];
 
@@ -264,25 +244,25 @@ function argumentsToParametters(parametters, args) {
 
     return params;
 }
-function prepareParametters(parametters, args) {
-    var params = {};
+function prepareParametters(params, args) {
+    var parametters = {};
 
     switch (args.length) {
         case 1:
-            params = args[0];
+            parametters = args[0];
             break;
 
         case params.length:
-            params = argumentsToParametters(parametters, args);
+            parametters = argumentsToParametters(params, args);
             break;
 
         default:
-            params = extend(argumentsToParametters(parametters, args),
-                args[parametters.length + 1]);
+            parametters = extend(argumentsToParametters(params, args),
+                args[params.length]);
             break;
     }
 
-    return params;
+    return parametters;
 }
 
 function TelegraBotApi(token) {
