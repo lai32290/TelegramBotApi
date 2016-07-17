@@ -2,7 +2,10 @@
   "host": "api.bot.org",
   "baseUrl": "https://api.telegram.org/bot",
   "methods": {
-    "getMe": "getMe",
+    "getMe": {
+      "urlString" : "getMe",
+      "requireParams" : []
+    },
     "sendMessage": "sendMessage",
     "forwardMessage": "forwardMessage",
     "sendPhoto": "sendPhoto",

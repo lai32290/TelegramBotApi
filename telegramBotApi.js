@@ -14,19 +14,14 @@ const parseMode = {
 
 function getMe() {
     var self = this;
-    const method = config.methods.getMe;
+    const method = config.methods.getMe.urlString;
+    const params = config.methods.getMe.requireParams;
+    var parametters = prepareParametters(params, arguments);
+
+    parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url: _makeUrl(self.token, method)
-            , json: true
-        };
-
-        request.get(options, (err, res, body) => {
-            if (err) reject(err);
-
-            resolve(body);
-        });
+        getRequire(self.token, method, parametters, resolve, reject);
     });
 }
 function sendMessage() {
