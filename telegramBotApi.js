@@ -1,24 +1,11 @@
 "use strict";
 
 const request = require('request')
+    , config = require('./config.json')
     , fs = require('fs')
     , qs = require('querystring')
     , extend = require('json-extend')
     ;
-
-const config = {
-    host: 'api.bot.org'
-    , baseUrl: 'https://api.telegram.org/bot'
-    , methods: {
-        getMe: 'getMe'
-        , sendMessage: 'sendMessage'
-        , forwardMessage: 'forwardMessage'
-        , sendPhoto: 'sendPhoto'
-        , sendVenue: 'sendVenue'
-        , sendContact: 'sendContact'
-        , getUpdates: 'getUpdates'
-    }
-};
 
 const parseMode = {
     markdown: 'Markdown'
