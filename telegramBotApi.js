@@ -231,6 +231,7 @@ function prepareParametters(params, args) {
     return parametters;
 }
 function getRequire(token, method, parametters, resolve, reject) {
+    const parametters = parametters == null ? '' : parametters;
     const options = {
         url: _makeUrl(token, method) + '?' + parametters
         , json: true
