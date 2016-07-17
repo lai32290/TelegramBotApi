@@ -182,16 +182,7 @@ function getUpdates() {
     const method = config.methods.getUpdates;
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url: _makeUrl(self.token, method)
-            , json: true
-        };
-
-        request.get(options, (err, res, body) => {
-            if (err) reject(err);
-
-            resolve(body);
-        });
+        getRequire(self.token, method, '', resolve, reject);
     });
 }
 
@@ -231,7 +222,6 @@ function prepareParametters(params, args) {
     return parametters;
 }
 function getRequire(token, method, parametters, resolve, reject) {
-    const parametters = parametters == null ? '' : parametters;
     const options = {
         url: _makeUrl(token, method) + '?' + parametters
         , json: true
