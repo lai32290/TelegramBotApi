@@ -16,36 +16,10 @@ function getMe() {
     return makeGetMethod(this.token, 'getMe', arguments);
 }
 function sendMessage() {
-    var self = this;
-
-    const method = config.methods.sendMessage;
-    const params = [
-        'chat_id'
-        , 'text'
-    ];
-    var parametters = prepareParametters(params, arguments);
-
-    parametters = qs.stringify(parametters);
-
-    return new Promise((resolve, reject) => {
-        getRequire(self.token, method, parametters, resolve, reject);
-    });
+    return makeGetMethod(this.token, 'sendMessage', arguments);
 }
 function forwardMessage() {
-    var self = this;
-
-    const method = config.methods.forwardMessage;
-    const params = [
-        'chat_id'
-        , 'from_chat_id'
-        , 'message_id'
-    ];
-    var parametters = prepareParametters(params, arguments);
-    parametters = qs.stringify(parametters);
-
-    return new Promise((resolve, reject) => {
-        getRequire(self.token, method, parametters, resolve, reject);
-    });
+    return makeGetMethod(this.token, 'forwardMessage', arguments);
 }
 function sendPhoto() {
     var self = this;

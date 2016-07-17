@@ -1,16 +1,29 @@
 {
-  "host": "api.bot.org",
-  "baseUrl": "https://api.telegram.org/bot",
-  "methods": {
-    "getMe": {
-      "urlString" : "getMe",
-      "requireParams" : []
-    },
-    "sendMessage": "sendMessage",
-    "forwardMessage": "forwardMessage",
-    "sendPhoto": "sendPhoto",
-    "sendVenue": "sendVenue",
-    "sendContact": "sendContact",
-    "getUpdates": "getUpdates"
-  }
+    "host": "api.bot.org",
+    "baseUrl": "https://api.telegram.org/bot",
+    "methods": {
+        "getMe": {
+            "urlString": "getMe",
+            "requireParams": []
+        },
+        "sendMessage": {
+            "urlString": "sendMessage",
+            "requireParams": [
+                "chat_id",
+                "text"
+            ]
+        },
+        "forwardMessage": {
+            "urlString": "forwardMessage",
+            "requireParams": [
+                "chat_id",
+                "from_chat_id",
+                "message_id"
+            ]
+        },
+        "sendPhoto": "sendPhoto",
+        "sendVenue": "sendVenue",
+        "sendContact": "sendContact",
+        "getUpdates": "getUpdates"
+    }
 }
