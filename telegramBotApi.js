@@ -11,6 +11,7 @@ const config = {
     , methods: {
         getUpdates: 'getUpdates'
         , sendMessage: 'sendMessage'
+        , getMe: 'getMe'
     }
 };
 
@@ -19,23 +20,13 @@ const parseMode = {
     , html: 'HTML'
 };
 
-function getUpdates() {
+function getMe() {
     var self = this;
 
     return new Promise((resolve, reject) => {
-        const options = {
-            url : _makeUrl(self.token, config.methods.getUpdates)
-            , json : true
-        };
-
-        request.get(options, (err, res, body) => {
-            if(err) reject(err);
-
-            resolve(body);
-        });
+        onlyReturn(self.token, config.methods.getMe, resolve, reject);
     });
 }
-
 function sendMessage() {
     var self = this;
 
@@ -76,9 +67,29 @@ function sendMessage() {
         });
     });
 }
+function getUpdates() {
+    var self = this;
+
+    return new Promise((resolve, reject) => {
+        onlyReturn(self.token, config.methods.getUpdates, resolve, reject);
+    });
+}
 
 function _makeUrl(token, method) {
     return config.baseUrl + token + '/' + method;
+}
+
+function onlyReturn(token, method, resolve, reject) {
+    const options = {
+        url : _makeUrl(token, method)
+        , json : true
+    };
+
+    request.get(options, (err, res, body) => {
+        if(err) reject(err);
+
+        resolve(body);
+    });
 }
 
 function TelegraBotApi(token) {
@@ -87,8 +98,9 @@ function TelegraBotApi(token) {
     if(token) self.token = token;
 }
 
-TelegraBotApi.prototype.getUpdates = getUpdates;
+TelegraBotApi.prototype.getMe = getMe;
 TelegraBotApi.prototype.sendMessage = sendMessage;
+TelegraBotApi.prototype.getUpdates = getUpdates;
 
 module.exports = {
     bot: TelegraBotApi
