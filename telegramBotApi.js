@@ -41,7 +41,7 @@ function TelegraBotApi(token) {
 
         switch (arguments.length) {
             case 1:
-                parametters.arguments;
+                parametters = arguments[0];
                 break;
 
             case 2:
