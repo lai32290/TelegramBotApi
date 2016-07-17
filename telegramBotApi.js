@@ -24,11 +24,9 @@ function forwardMessage() {
 function sendPhoto() {
     var self = this;
 
-    const method = config.methods.sendPhoto;
-    const params = [
-        'chat_id'
-        , 'photo'
-    ];
+    const method = config.methods.sendPhoto.urlString;
+    const params = config.methods.sendPhoto.requireParams;
+
     var parametters = prepareParametters(params, arguments);
 
     if (fs.existsSync(parametters['photo']))
