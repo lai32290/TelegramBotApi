@@ -13,16 +13,7 @@ const parseMode = {
 };
 
 function getMe() {
-    var self = this;
-    const method = config.methods.getMe.urlString;
-    const params = config.methods.getMe.requireParams;
-    var parametters = prepareParametters(params, arguments);
-
-    parametters = qs.stringify(parametters);
-
-    return new Promise((resolve, reject) => {
-        getRequire(self.token, method, parametters, resolve, reject);
-    });
+    return makeGetMethod(this.token, 'getMe', arguments);
 }
 function sendMessage() {
     var self = this;
@@ -175,6 +166,17 @@ function postRequire(token, method, parametters, resolve, reject) {
         if (err) reject(err);
 
         resolve(body);
+    });
+}
+function makeGetMethod(token, methodName, args) {
+    const method = config.methods[methodName].urlString;
+    const params = config.methods[methodName].requireParams;
+    var parametters = prepareParametters(params, args);
+
+    parametters = qs.stringify(parametters);
+
+    return new Promise((resolve, reject) => {
+        getRequire(token, method, parametters, resolve, reject);
     });
 }
 
