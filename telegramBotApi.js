@@ -35,6 +35,10 @@ function getMe() {
 function sendMessage() {
     var self = this;
 
+    const params = [
+        'chat_id'
+        , 'text'
+    ];
     var parametters = {};
 
     switch (arguments.length) {
@@ -166,22 +170,7 @@ function sendVenue() {
         , 'title'
         , 'address'
     ];
-    var parametters = {};
-
-    switch (arguments.length) {
-        case 1:
-            parametters = arguments[0];
-            break;
-
-        case params.length:
-            parametters = argumentsToParametters(params, arguments);
-            break;
-
-        default:
-            parametters = extend(argumentsToParametters(params, arguments),
-                arguments[parametters.length + 1]);
-            break;
-    }
+    var parametters = prepareParametters(params, arguments);
 
     parametters = qs.stringify(parametters);
 
@@ -271,6 +260,26 @@ function argumentsToParametters(parametters, args) {
         var key = parametters[index];
 
         params[key] = value;
+    }
+
+    return params;
+}
+function prepareParametters(parametters, args) {
+    var params = {};
+
+    switch (args.length) {
+        case 1:
+            params = args[0];
+            break;
+
+        case params.length:
+            params = argumentsToParametters(parametters, args);
+            break;
+
+        default:
+            params = extend(argumentsToParametters(parametters, args),
+                args[parametters.length + 1]);
+            break;
     }
 
     return params;
