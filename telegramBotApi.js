@@ -8,7 +8,7 @@ const request = require('request')
 
 const config = {
     host: 'api.bot.org'
-    , baseUrl : 'https://api.telegram.org/bot'
+    , baseUrl: 'https://api.telegram.org/bot'
     , methods: {
         getMe: 'getMe'
         , sendMessage: 'sendMessage'
@@ -50,7 +50,7 @@ function sendMessage() {
         };
 
         request.get(options, (err, res, body) => {
-            if(err) reject(err);
+            if (err) reject(err);
 
             resolve(body);
         });
@@ -75,7 +75,7 @@ function forwardMessage() {
         };
 
         request.get(options, (err, res, body) => {
-            if(err) reject(err);
+            if (err) reject(err);
 
             resolve(body);
         });
@@ -84,29 +84,13 @@ function forwardMessage() {
 function sendPhoto() {
     var self = this;
 
-    var parametters = {};
+    const params = [
+        'chat_id'
+        , 'photo'
+    ];
+    var parametters = prepareParametters(params, arguments);
 
-    switch (arguments.length) {
-        case 1:
-            parametters = arguments[0];
-            break;
-
-        case 2:
-            parametters = {
-                'chat_id' : arguments[0]
-                , 'photo' : arguments[1]
-            };
-            break;
-
-        default:
-            parametters = extend({
-                'chat_id' : arguments[0]
-                , 'photo' : arguments[1]
-            }, arguments[2]);
-            break;
-    }
-
-    if(fs.existsSync(parametters['photo']))
+    if (fs.existsSync(parametters['photo']))
         parametters['photo'] = fs.createReadStream(parametters['photo']);
 
     return new Promise((resolve, reject) => {
@@ -117,7 +101,7 @@ function sendPhoto() {
         };
 
         request.post(options, (err, res, body) => {
-            if(err) reject(err);
+            if (err) reject(err);
 
             resolve(body);
         });
@@ -144,7 +128,7 @@ function sendVenue() {
         };
 
         request.get(options, (err, res, body) => {
-            if(err) reject(err);
+            if (err) reject(err);
 
             resolve(body);
         });
@@ -161,17 +145,17 @@ function sendContact() {
 
         case 2:
             parametters = {
-                'chat_id' : arguments[0]
-                , 'phone_number' : arguments[1]
-                , 'first_name' : arguments[2]
+                'chat_id': arguments[0]
+                , 'phone_number': arguments[1]
+                , 'first_name': arguments[2]
             };
             break;
 
         default:
             parametters = extend({
-                'chat_id' : arguments[0]
-                , 'phone_number' : arguments[1]
-                , 'first_name' : arguments[2]
+                'chat_id': arguments[0]
+                , 'phone_number': arguments[1]
+                , 'first_name': arguments[2]
             }, arguments[3]);
             break;
     }
@@ -185,7 +169,7 @@ function sendContact() {
         };
 
         request.get(options, (err, res, body) => {
-            if(err) reject(err);
+            if (err) reject(err);
 
             resolve(body);
         });
@@ -204,12 +188,12 @@ function _makeUrl(token, method) {
 }
 function onlyReturn(token, method, resolve, reject) {
     const options = {
-        url : _makeUrl(token, method)
-        , json : true
+        url: _makeUrl(token, method)
+        , json: true
     };
 
     request.get(options, (err, res, body) => {
-        if(err) reject(err);
+        if (err) reject(err);
 
         resolve(body);
     });
@@ -217,7 +201,7 @@ function onlyReturn(token, method, resolve, reject) {
 function argumentsToParametters(parametters, args) {
     var params = {};
 
-    for(var index in parametters) {
+    for (var index in parametters) {
         var value = args[index];
         var key = parametters[index];
 
@@ -250,7 +234,7 @@ function prepareParametters(params, args) {
 function TelegraBotApi(token) {
     var self = this;
 
-    if(token) self.token = token;
+    if (token) self.token = token;
 }
 
 TelegraBotApi.prototype.getMe = getMe;
