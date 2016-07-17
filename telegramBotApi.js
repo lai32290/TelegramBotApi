@@ -12,6 +12,7 @@ const config = {
         getUpdates: 'getUpdates'
         , sendMessage: 'sendMessage'
         , getMe: 'getMe'
+        , forwardMessage: 'forwardMessage'
     }
 };
 
@@ -67,6 +68,48 @@ function sendMessage() {
         });
     });
 }
+function forwardMessage() {
+    var self = this;
+
+    var parametters = {};
+
+    switch (arguments.length) {
+        case 1:
+            parametters = arguments[0];
+            break;
+
+        case 3:
+            parametters = {
+                'chat_id' : arguments[0]
+                , 'from_chat_id' : arguments[1]
+                , 'message_id' : arguments[2]
+            };
+            break;
+
+        default:
+            parametters = extend({
+                'chat_id' : arguments[0]
+                , 'from_chat_id' : arguments[1]
+                , 'message_id' : arguments[2]
+            }, arguments[3]);
+            break;
+    }
+
+    parametters = qs.stringify(parametters);
+
+    return new Promise((resolve, reject) => {
+        const options = {
+            url: _makeUrl(self.token, config.methods.forwardMessage) + '?' + parametters
+            , json: true
+        };
+
+        request.get(options, (err, res, body) => {
+            if(err) reject(err);
+
+            resolve(body);
+        });
+    });
+}
 function getUpdates() {
     var self = this;
 
@@ -100,6 +143,7 @@ function TelegraBotApi(token) {
 
 TelegraBotApi.prototype.getMe = getMe;
 TelegraBotApi.prototype.sendMessage = sendMessage;
+TelegraBotApi.prototype.forwardMessage = forwardMessage;
 TelegraBotApi.prototype.getUpdates = getUpdates;
 
 module.exports = {
