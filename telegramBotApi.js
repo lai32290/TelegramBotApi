@@ -61,8 +61,6 @@ function sendMessage() {
             break;
     }
 
-    console.log(parametters);
-
     parametters = qs.stringify(parametters);
 
     return new Promise((resolve, reject) => {
