@@ -37,23 +37,7 @@ function sendPhoto() {
     });
 }
 function sendVenue() {
-    var self = this;
-
-    const method = config.methods.sendVenue;
-    const params = [
-        'chat_id'
-        , 'latitude'
-        , 'longitude'
-        , 'title'
-        , 'address'
-    ];
-    var parametters = prepareParametters(params, arguments);
-
-    parametters = qs.stringify(parametters);
-
-    return new Promise((resolve, reject) => {
-        getRequire(self.token, method, parametters, resolve, reject);
-    });
+    return makeGetMethod(this.token, 'sendVenue', arguments);
 }
 function sendContact() {
     var self = this;
