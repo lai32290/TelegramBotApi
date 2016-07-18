@@ -19,5 +19,9 @@
   "dependencies": {
     "json-extend": "^0.1.0",
     "require": "^2.4.20"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.5.3"
   }
 }
