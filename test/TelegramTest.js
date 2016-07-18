@@ -39,7 +39,7 @@ describe('TelegramBotApi', function() {
         this.timeout(10000);
         const chatId = config.chatId;
 
-        var testName = 'only required data';
+        var testName = 'only require data';
         it(testName, function() {
             return bot.sendMessage(chatId, testName)
                 .then(function(res) {
@@ -49,7 +49,7 @@ describe('TelegramBotApi', function() {
                 });
         });
 
-        testName = 'only required data with json';
+        testName = 'only require data with json';
         it(testName, function() {
             const options = {
                 'chat_id': chatId,
