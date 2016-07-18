@@ -10,12 +10,12 @@ const chai = require('chai')
 var bot = new Bot(config.token);
 
 describe('TelegramBotApi', function() {
-    this.timeout(10000);
 
-    describe('getUpdates', () => {
-        it('is success', (done) => {
+    describe('getUpdates', function() {
+        this.timeout(10000);
+        it('is success', function(done) {
             bot.getUpdates()
-                .then(res => {
+                .then(function(res) {
                     assert.property(res, 'ok');
                     assert.equal(res.ok, true);
                     done();
@@ -23,11 +23,11 @@ describe('TelegramBotApi', function() {
         });
     });
 
-    describe('getMe', () => {
-        it('is success', (done) => {
+    describe('getMe', function() {
+        this.timeout(10000);
+        it('is success', function(done) {
             bot.getMe()
-                .then(res => {
-                    console.log(res);
+                .then(function(res) {
                     assert.property(res, 'ok');
                     assert.property(res.ok, true);
                     done();
@@ -35,12 +35,13 @@ describe('TelegramBotApi', function() {
         });
     });
 
-    describe('sendMessage', () => {
+    describe('sendMessage', function() {
         const chatId = config.chatId;
 
-        it('only required data', (done) => {
+        it('only required data', function(done) {
+            this.timeout(10000);
             bot.sendMessage(chatId, 'Olaa')
-                .then(res=> {
+                .then(function(res) {
                     assert.property(res, 'ok');
                     assert.property(res.ok, true);
                     done();
