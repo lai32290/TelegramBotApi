@@ -13,38 +13,37 @@ describe('TelegramBotApi', function() {
 
     describe('getUpdates', function() {
         this.timeout(10000);
-        it('is success', function(done) {
-            bot.getUpdates()
+        
+        it('is success', function() {
+            return bot.getUpdates()
                 .then(function(res) {
                     assert.property(res, 'ok');
-                    assert.equal(res.ok, true);
-                    done();
+                    assert.equal(res.ok, true); 
                 });
         });
     });
 
     describe('getMe', function() {
         this.timeout(10000);
-        it('is success', function(done) {
-            bot.getMe()
+
+        it('is success', function() {
+            return bot.getMe()
                 .then(function(res) {
                     assert.property(res, 'ok');
-                    assert.property(res.ok, true);
-                    done();
+                    assert.equal(res.ok, true);
                 });
         });
     });
 
     describe('sendMessage', function() {
+        this.timeout(10000);
         const chatId = config.chatId;
 
-        it('only required data', function(done) {
-            this.timeout(10000);
-            bot.sendMessage(chatId, 'Olaa')
+        it('only required data', function() {
+            return bot.sendMessage(chatId, 'Olaa')
                 .then(function(res) {
                     assert.property(res, 'ok');
-                    assert.property(res.ok, true);
-                    done();
+                    assert.equal(res.ok, true);
                 });
         });
     });
