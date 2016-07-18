@@ -13,7 +13,7 @@ describe('TelegramBotApi', function() {
 
     describe('getUpdates', function() {
         this.timeout(10000);
-        
+
         it('is success', function() {
             return bot.getUpdates()
                 .then(function(res) {
@@ -39,11 +39,27 @@ describe('TelegramBotApi', function() {
         this.timeout(10000);
         const chatId = config.chatId;
 
-        it('only required data', function() {
-            return bot.sendMessage(chatId, 'Olaa')
+        var testName = 'only required data';
+        it(testName, function() {
+            return bot.sendMessage(chatId, testName)
                 .then(function(res) {
                     assert.property(res, 'ok');
                     assert.equal(res.ok, true);
+                    assert.equal(res.result.text, testName);
+                });
+        });
+
+        testName = 'only required data with json';
+        it(testName, function() {
+            const options = {
+                'chat_id': chatId,
+                'text': testName
+            };
+            return bot.sendMessage(options)
+                .then(function(res) {
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
+                    assert.equal(res.result.text, testName);
                 });
         });
     });
