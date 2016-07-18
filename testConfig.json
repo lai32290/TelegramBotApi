@@ -1,3 +1,4 @@
 {
-    "token" : "your token here"
+    "token" : "Your bot token here",
+    "chatId" : 123456789
 }

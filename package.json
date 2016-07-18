@@ -22,6 +22,11 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-mocha": "^2.2.0",
+    "karma": "^1.1.1",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-mocha": "^1.1.1",
     "mocha": "^2.5.3"
   }
 }
