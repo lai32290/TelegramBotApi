@@ -40,6 +40,8 @@ function sendVenue() {
     return makeGetMethod(this.token, 'sendVenue', arguments);
 }
 function sendContact() {
+    return makeGetMethod(this.token, 'sendContact', arguments);
+
     var self = this;
 
     const method = config.methods.sendContact;
