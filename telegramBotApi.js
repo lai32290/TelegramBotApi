@@ -41,21 +41,6 @@ function sendVenue() {
 }
 function sendContact() {
     return makeGetMethod(this.token, 'sendContact', arguments);
-
-    var self = this;
-
-    const method = config.methods.sendContact;
-    const params = [
-        'chat_id'
-        , 'phone_number'
-        , 'first_name'
-    ];
-    var parametters = prepareParametters(params, arguments);
-    parametters = qs.stringify(parametters);
-
-    return new Promise((resolve, reject) => {
-        getRequire(self.token, method, parametters, resolve, reject);
-    });
 }
 function getUpdates() {
     var self = this;
