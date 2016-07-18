@@ -43,15 +43,10 @@ function sendContact() {
     return makeGetMethod(this.token, 'sendContact', arguments);
 }
 function getUpdates() {
-    var self = this;
-    const method = config.methods.getUpdates;
-
-    return new Promise((resolve, reject) => {
-        getRequire(self.token, method, '', resolve, reject);
-    });
+    return makeGetMethod(this.token, 'getUpdates', arguments);
 }
 
-function _makeUrl(token, method) {
+function makeUrl(token, method) {
     return config.baseUrl + token + '/' + method;
 }
 function argumentsToParametters(parametters, args) {
@@ -88,7 +83,7 @@ function prepareParametters(params, args) {
 }
 function getRequire(token, method, parametters, resolve, reject) {
     const options = {
-        url: _makeUrl(token, method) + '?' + parametters
+        url: makeUrl(token, method) + '?' + parametters
         , json: true
     };
 
@@ -100,7 +95,7 @@ function getRequire(token, method, parametters, resolve, reject) {
 }
 function postRequire(token, method, parametters, resolve, reject) {
     const options = {
-        url: _makeUrl(token, method)
+        url: makeUrl(token, method)
         , formData: parametters
         , json: true
     };
