@@ -13,10 +13,20 @@ const parseMode = {
 };
 
 function getMe() {
-    return makeGetMethod(this.token, 'getMe', arguments);
+    const methodName = 'getMe';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments)
+    
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
 }
 function sendMessage() {
-    return makeGetMethod(this.token, 'sendMessage', arguments);
+    const methodName = 'sendMessage';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments)
+    
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
 }
 function forwardMessage() {
     return makeGetMethod(this.token, 'forwardMessage', arguments);
@@ -43,7 +53,12 @@ function sendContact() {
     return makeGetMethod(this.token, 'sendContact', arguments);
 }
 function getUpdates() {
-    return makeGetMethod(this.token, 'getUpdates', arguments);
+    const methodName = 'getUpdates';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments)
+    
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
 }
 
 function makeUrl(token, method) {
@@ -108,10 +123,7 @@ function postRequire(token, method, parametters, resolve, reject) {
 }
 function makeGetMethod(token, methodName, args) {
     const method = config.methods[methodName].urlString;
-    const params = config.methods[methodName].requireParams;
-    var parametters = prepareParametters(params, args);
-
-    parametters = qs.stringify(parametters);
+    var parametters = args || "";
 
     return new Promise((resolve, reject) => {
         getRequire(token, method, parametters, resolve, reject);
