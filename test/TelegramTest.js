@@ -40,7 +40,7 @@ describe('TelegramBotApi', function() {
         const chatId = config.chatId;
 
         it('only require data', function() {
-            var testName = 'only require data';
+            const testName = 'only require data';
             return bot.sendMessage(chatId, testName)
                 .then(function(res) {
                     assert.property(res, 'ok');
@@ -50,7 +50,7 @@ describe('TelegramBotApi', function() {
         });
 
         it('only require data with json', function() {
-            var testName = 'only require data with json';
+            const testName = 'only require data with json';
             const options = {
                 'chat_id': chatId,
                 'text': testName
