@@ -9,6 +9,7 @@ const chai = require('chai')
 
 var bot = new Bot(config.token);
 var getUpdates = {};
+var lastMessage = {};
 const chatId = config.chatId;
 
 describe('TelegramBotApi', function() {
@@ -59,6 +60,7 @@ describe('TelegramBotApi', function() {
             };
             return bot.sendMessage(options)
                 .then(function(res) {
+                    lastMessage = res.result;
                     assert.property(res, 'ok');
                     assert.equal(res.ok, true);
                     assert.equal(res.result.text, testName);
@@ -70,7 +72,7 @@ describe('TelegramBotApi', function() {
         it('only require data', function() {
             this.timeout(10000);
 
-            const messageId = getUpdates.result[getUpdates.result.length - 1].message.message_id;
+            const messageId = lastMessage.message_id;
             return bot.forwardMessage(chatId, chatId, messageId)
                 .then(function(res) {
                     assert.property(res, 'ok');
@@ -81,7 +83,7 @@ describe('TelegramBotApi', function() {
         it('only require data in JSON', function() {
             this.timeout(10000);
 
-            const messageId = getUpdates.result[getUpdates.result.length - 1].message.message_id;
+            const messageId = lastMessage.message_id;
             const options = {
                 chat_id: chatId
                 , from_chat_id: chatId
