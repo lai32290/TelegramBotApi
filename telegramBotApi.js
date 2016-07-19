@@ -15,7 +15,7 @@ const parseMode = {
 function getMe() {
     const methodName = 'getMe';
     const params = config.methods[methodName].requireParams;
-    const args = prepareParametters(params, arguments)
+    const args = prepareParametters(params, arguments);
     
     var parametters = qs.stringify(args);
     return makeGetMethod(this.token, methodName, parametters);
@@ -23,13 +23,18 @@ function getMe() {
 function sendMessage() {
     const methodName = 'sendMessage';
     const params = config.methods[methodName].requireParams;
-    const args = prepareParametters(params, arguments)
+    const args = prepareParametters(params, arguments);
     
     var parametters = qs.stringify(args);
     return makeGetMethod(this.token, methodName, parametters);
 }
 function forwardMessage() {
-    return makeGetMethod(this.token, 'forwardMessage', arguments);
+    const methodName = 'forwardMessage';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments);
+
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
 }
 function sendPhoto() {
     var self = this;

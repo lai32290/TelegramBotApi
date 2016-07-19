@@ -8,6 +8,8 @@ const chai = require('chai')
     ;
 
 var bot = new Bot(config.token);
+var getUpdates = {};
+const chatId = config.chatId;
 
 describe('TelegramBotApi', function() {
 
@@ -17,6 +19,7 @@ describe('TelegramBotApi', function() {
         it('is success', function() {
             return bot.getUpdates()
                 .then(function(res) {
+                    getUpdates = res;
                     assert.property(res, 'ok');
                     assert.equal(res.ok, true); 
                 });
@@ -37,7 +40,6 @@ describe('TelegramBotApi', function() {
 
     describe('sendMessage', function() {
         this.timeout(10000);
-        const chatId = config.chatId;
 
         it('only require data', function() {
             const testName = 'only require data';
@@ -60,6 +62,35 @@ describe('TelegramBotApi', function() {
                     assert.property(res, 'ok');
                     assert.equal(res.ok, true);
                     assert.equal(res.result.text, testName);
+                });
+        });
+    });
+
+    describe('forwardMessage', function() {
+        it('only require data', function() {
+            this.timeout(10000);
+
+            const messageId = getUpdates.result[getUpdates.result.length - 1].message.message_id;
+            return bot.forwardMessage(chatId, chatId, messageId)
+                .then(function(res) {
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
+                });
+        });
+
+        it('only require data in JSON', function() {
+            this.timeout(10000);
+
+            const messageId = getUpdates.result[getUpdates.result.length - 1].message.message_id;
+            const options = {
+                chat_id: chatId
+                , from_chat_id: chatId
+                , message_id: messageId
+            };
+            return bot.forwardMessage(options)
+                .then(function(res) {
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
                 });
         });
     });
