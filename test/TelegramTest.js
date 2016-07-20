@@ -96,4 +96,32 @@ describe('TelegramBotApi', function() {
                 });
         });
     });
+
+    describe('sendPhoto', function() {
+        this.timeout(50000);
+
+        it('only require data', function() {
+            const photo = './test/botfather.png';
+
+            return bot.sendPhoto(chatId, photo)
+                .then(function(res) {
+                    console.log(res);
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
+                });
+        });
+
+        it('only require data', function() {
+            const options = {
+                chat_id: chatId,
+                photo: './test/botfather.png'
+            };
+
+            return bot.sendPhoto(options)
+                .then(function(res) {
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
+                });
+        });
+    });
 });
