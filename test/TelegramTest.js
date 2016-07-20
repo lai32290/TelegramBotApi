@@ -105,16 +105,15 @@ describe('TelegramBotApi', function() {
 
             return bot.sendPhoto(chatId, photo)
                 .then(function(res) {
-                    console.log(res);
                     assert.property(res, 'ok');
                     assert.equal(res.ok, true);
                 });
         });
 
-        it('only require data', function() {
+        it('only require data in JSON', function() {
             const options = {
-                chat_id: chatId,
-                photo: './test/botfather.png'
+                chat_id: chatId
+                , photo: './test/botfather.png'
             };
 
             return bot.sendPhoto(options)
@@ -123,5 +122,33 @@ describe('TelegramBotApi', function() {
                     assert.equal(res.ok, true);
                 });
         });
+    });
+
+    describe('sendVenue', function() {
+        this.timeout(50000);
+
+        it('only require data', function() {
+            return bot.sendVenue(chatId, -22.503010, -47.565686, 'title', 'address')
+                .then(function(res) {
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
+                });
+        });
+
+        it('only require data in JSON', function() {
+            const options = {
+                chat_id: chatId
+                , latitude: '-22.503010'
+                , longitude: '-47.565686'
+                , title: 'Limbo'
+                , address: 'Streat 12.343, limbo'
+            };
+            return bot.sendVenue(options)
+                .then(function(res) {
+                    assert.property(res, 'ok');
+                    assert.equal(res.ok, true);
+                });
+        });
+
     });
 });

@@ -52,7 +52,12 @@ function sendPhoto() {
     });
 }
 function sendVenue() {
-    return makeGetMethod(this.token, 'sendVenue', arguments);
+    const methodName = 'sendVenue';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments);
+
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
 }
 function sendContact() {
     return makeGetMethod(this.token, 'sendContact', arguments);
