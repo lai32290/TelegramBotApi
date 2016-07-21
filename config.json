@@ -46,6 +46,13 @@
                 "first_name"
             ]
         },
+        "sendSticker": {
+            "urlString": "sendSticker",
+            "requireParams": [
+                "chat_id",
+                "sticker"
+            ]
+        },
         "getUpdates": {
             "urlString": "getUpdates",
             "requireParams": []
