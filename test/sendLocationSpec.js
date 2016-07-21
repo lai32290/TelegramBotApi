@@ -10,31 +10,27 @@ const chai = require('chai')
 var bot = new Bot(config.token);
 const chatId = config.chatId;
 
-describe('sendContact', function() {
+describe('sendLocation', function() {
     this.timeout(50000);
     const options = {
         chat_id: chatId
-        , phone_number: parseInt(Math.random() * 100000)
-        , first_name: 'Hello JSON'
+        , latitude: '-22.503010'
+        , longitude: '-47.565686'
     };
 
     it('only require data', function() {
-        return bot.sendContact(options.chat_id, options.phone_number, options.first_name)
+        return bot.sendLocation(options.chat_id, options.latitude, options.longitude, options.title, options.address)
             .then(function(res) {
                 assert.property(res, 'ok');
                 assert.equal(res.ok, true);
-                assert.equal(res.result.contact.first_name, options.first_name);
-                assert.equal(res.result.contact.phone_number, options.phone_number);
             });
     });
 
     it('only require data in JSON', function() {
-        return bot.sendContact(options)
+        return bot.sendLocation(options)
             .then(function(res) {
                 assert.property(res, 'ok');
                 assert.equal(res.ok, true);
-                assert.equal(res.result.contact.first_name, options.first_name);
-                assert.equal(res.result.contact.phone_number, options.phone_number);
             });
     });
 
