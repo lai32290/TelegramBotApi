@@ -67,6 +67,14 @@ function sendContact() {
     var parametters = qs.stringify(args);
     return makeGetMethod(this.token, methodName, parametters);
 }
+function sendSticker() {
+    const methodName = 'sendSticker';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments);
+
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
+}
 function getUpdates() {
     const methodName = 'getUpdates';
     const params = config.methods[methodName].requireParams;
@@ -157,6 +165,7 @@ TelegraBotApi.prototype.forwardMessage = forwardMessage;
 TelegraBotApi.prototype.sendPhoto = sendPhoto;
 TelegraBotApi.prototype.sendVenue = sendVenue;
 TelegraBotApi.prototype.sendContact = sendContact;
+TelegraBotApi.prototype.sendSticker = sendSticker;
 TelegraBotApi.prototype.getUpdates = getUpdates;
 
 module.exports = {
