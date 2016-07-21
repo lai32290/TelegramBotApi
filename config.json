@@ -53,6 +53,14 @@
                 "sticker"
             ]
         },
+        "sendLocation": {
+            "urlString": "sendLocation",
+            "requireParams": [
+                "chat_id",
+                "latitude",
+                "longitude"
+            ]
+        },
         "getUpdates": {
             "urlString": "getUpdates",
             "requireParams": []
