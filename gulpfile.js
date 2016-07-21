@@ -15,6 +15,6 @@ gulp.task('watch', function () {
 });
 
 gulp.task('mocha', () => {
-    return gulp.src('test/*.js', {read: false})
+    return gulp.src('test/*Spec.js', {read: false})
         .pipe(mocha());
 });
