@@ -22,10 +22,9 @@ function getMe() {
 function sendMessage() {
     const methodName = 'sendMessage';
     const params = config.methods[methodName].requireParams;
-    const args = prepareParametters(params, arguments);
+    var parametters = prepareParametters(params, arguments);
 
-    var parametters = qs.stringify(args);
-    return makeGetMethod(this.token, methodName, parametters);
+    return callMethod(this.token, methodName, parametters);
 }
 function forwardMessage() {
     const methodName = 'forwardMessage';
