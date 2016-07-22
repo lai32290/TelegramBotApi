@@ -83,6 +83,14 @@ function sendLocation() {
     var parametters = qs.stringify(args);
     return makeGetMethod(this.token, methodName, parametters);
 }
+function getChat() {
+    const methodName = 'getChat';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments);
+
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
+}
 function getUpdates() {
     const methodName = 'getUpdates';
     const params = config.methods[methodName].requireParams;
@@ -111,12 +119,12 @@ function prepareParametters(params, args) {
     var parametters = {};
 
     switch (args.length) {
-        case 1:
-            parametters = args[0];
-            break;
-
         case params.length:
             parametters = argumentsToParametters(params, args);
+            break;
+
+        case 1:
+            parametters = args[0];
             break;
 
         default:
@@ -175,6 +183,7 @@ TelegraBotApi.prototype.sendVenue = sendVenue;
 TelegraBotApi.prototype.sendContact = sendContact;
 TelegraBotApi.prototype.sendSticker = sendSticker;
 TelegraBotApi.prototype.sendLocation = sendLocation;
+TelegraBotApi.prototype.getChat = getChat;
 TelegraBotApi.prototype.getUpdates = getUpdates;
 
 module.exports = {

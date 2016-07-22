@@ -61,6 +61,12 @@
                 "longitude"
             ]
         },
+        "getChat": {
+            "urlString": "getChat",
+            "requireParams": [
+                "chat_id"
+            ]
+        },
         "getUpdates": {
             "urlString": "getUpdates",
             "requireParams": []
