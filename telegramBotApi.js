@@ -35,15 +35,15 @@ function forwardMessage() {
 }
 function sendPhoto() {
     var self = this;
-
-    const method = config.methods.sendPhoto.urlString;
-    const params = config.methods.sendPhoto.requireParams;
-
+    const methodName = 'sendPhoto';
+    const params = config.methods[methodName].requireParams;
     var parametters = prepareParametters(params, arguments);
+
 
     if (fs.existsSync(parametters['photo']))
         parametters['photo'] = fs.createReadStream(parametters['photo']);
 
+    return callMethod(this.token, methodName, parametters);
     return new Promise((resolve, reject) => {
         postRequire(self.token, method, parametters, resolve, reject);
     });
@@ -145,13 +145,22 @@ function getRequire(token, method, parametters, resolve, reject) {
     });
 }
 function postRequire(token, method, parametters, resolve, reject) {
-    const options = {
+    var options = {
         url: makeUrl(token, method)
-        , form: parametters
         , json: true
     };
 
-    request.post(options.url, options, (err, res, body) => {
+    if(Object.keys(parametters).length == 0) {
+        request.post(options.url, options, (err, res, body) => {
+            if (err) reject(err);
+
+            resolve(body);
+        });
+        return;
+    }
+
+    options.formData = parametters;
+    request.post(options, (err, res, body) => {
         if (err) reject(err);
 
         resolve(body);
@@ -168,6 +177,7 @@ function makeGetMethod(token, methodName, args) {
 function callMethod(token, methodName, args) {
     const method = config.methods[methodName].urlString;
     var parametters = args || {};
+
 
     return new Promise((resolve, reject) => {
         postRequire(token, method, parametters, resolve, reject);
