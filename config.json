@@ -53,6 +53,13 @@
                 "first_name"
             ]
         },
+        "sendChatAction": {
+            "urlString": "sendChatAction",
+            "requireParams": [
+                "chat_id",
+                "action"
+            ]
+        },
         "sendSticker": {
             "urlString": "sendSticker",
             "requireParams": [
