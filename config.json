@@ -28,6 +28,13 @@
                 "photo"
             ]
         },
+        "sendDocument": {
+            "urlString": "sendDocument",
+            "requireParams": [
+                "chat_id",
+                "document"
+            ]
+        },
         "sendVenue": {
             "urlString": "sendVenue",
             "requireParams": [

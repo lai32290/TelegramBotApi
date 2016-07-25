@@ -48,6 +48,21 @@ function sendPhoto() {
         postRequire(self.token, method, parametters, resolve, reject);
     });
 }
+function sendDocument() {
+    var self = this;
+    const methodName = 'sendDocument';
+    const params = config.methods[methodName].requireParams;
+    var parametters = prepareParametters(params, arguments);
+
+
+    if (fs.existsSync(parametters['document']))
+        parametters['document'] = fs.createReadStream(parametters['document']);
+
+    return callMethod(this.token, methodName, parametters);
+    return new Promise((resolve, reject) => {
+        postRequire(self.token, method, parametters, resolve, reject);
+    });
+}
 function sendVenue() {
     const methodName = 'sendVenue';
     const params = config.methods[methodName].requireParams;
@@ -194,6 +209,7 @@ TelegraBotApi.prototype.getMe = getMe;
 TelegraBotApi.prototype.sendMessage = sendMessage;
 TelegraBotApi.prototype.forwardMessage = forwardMessage;
 TelegraBotApi.prototype.sendPhoto = sendPhoto;
+TelegraBotApi.prototype.sendDocument = sendDocument;
 TelegraBotApi.prototype.sendVenue = sendVenue;
 TelegraBotApi.prototype.sendContact = sendContact;
 TelegraBotApi.prototype.sendSticker = sendSticker;
