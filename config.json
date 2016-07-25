@@ -81,6 +81,12 @@
                 "chat_id"
             ]
         },
+        "getChatAdministrators": {
+            "urlString": "getChatAdministrators",
+            "requireParams": [
+                "chat_id"
+            ]
+        },
         "getUpdates": {
             "urlString": "getUpdates",
             "requireParams": []

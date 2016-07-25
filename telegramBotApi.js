@@ -111,6 +111,14 @@ function getChat() {
     var parametters = qs.stringify(args);
     return makeGetMethod(this.token, methodName, parametters);
 }
+function getChatAdministrators() {
+    const methodName = 'getChatAdministrators';
+    const params = config.methods[methodName].requireParams;
+    const args = prepareParametters(params, arguments);
+
+    var parametters = qs.stringify(args);
+    return makeGetMethod(this.token, methodName, parametters);
+}
 function getUpdates() {
     const methodName = 'getUpdates';
     const params = config.methods[methodName].requireParams;
@@ -224,6 +232,7 @@ TelegraBotApi.prototype.sendChatAction = sendChatAction;
 TelegraBotApi.prototype.sendSticker = sendSticker;
 TelegraBotApi.prototype.sendLocation = sendLocation;
 TelegraBotApi.prototype.getChat = getChat;
+TelegraBotApi.prototype.getChatAdministrators = getChatAdministrators;
 TelegraBotApi.prototype.getUpdates = getUpdates;
 
 module.exports = {
