@@ -1,4 +1,5 @@
 {
-    "token" : "your bot token here",
-    "chatId" : 123456789
+    "token" : "put here your token",
+    "chatId" : 1234,
+    "fileId" : "fileId to test getFile method"
 }
