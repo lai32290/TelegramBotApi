@@ -75,6 +75,12 @@
                 "longitude"
             ]
         },
+        "getFile": {
+            "urlString": "getFile",
+            "requireParams": [
+                "file_id"
+            ]
+        },
         "getChat": {
             "urlString": "getChat",
             "requireParams": [

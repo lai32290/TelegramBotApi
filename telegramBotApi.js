@@ -103,6 +103,15 @@ function sendLocation() {
     var parametters = qs.stringify(args);
     return makeGetMethod(this.token, methodName, parametters);
 }
+function getFile() {
+    var self = this;
+    const methodName = 'getFile';
+    const params = config.methods[methodName].requireParams;
+    const args = arguments[0].constructor === {}.constructor ? arguments[0][params[0]] : arguments[0];
+    var parametters = prepareParametters(params, [args]);
+
+    return callMethod(this.token, methodName, parametters);
+}
 function getChat() {
     const methodName = 'getChat';
     const params = config.methods[methodName].requireParams;
@@ -231,6 +240,7 @@ TelegraBotApi.prototype.sendContact = sendContact;
 TelegraBotApi.prototype.sendChatAction = sendChatAction;
 TelegraBotApi.prototype.sendSticker = sendSticker;
 TelegraBotApi.prototype.sendLocation = sendLocation;
+TelegraBotApi.prototype.getFile = getFile;
 TelegraBotApi.prototype.getChat = getChat;
 TelegraBotApi.prototype.getChatAdministrators = getChatAdministrators;
 TelegraBotApi.prototype.getUpdates = getUpdates;
